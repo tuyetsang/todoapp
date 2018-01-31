@@ -29,11 +29,12 @@ class TodoList extends React.Component {
   addItem(e) {
     let itemArray = this.state.items;
 
-    if (this._inputElement.value !== "") { 
+    if (this._inputElement.value !== "") {  // tao moi 1 phan tu
       itemArray.unshift({ // thêm vào đầu mảng, good
         text: this._inputElement.value,
         key: Date.now(),
-        done:false
+        done:false,
+        date:new Date().toString()
       });
     }
 
@@ -43,7 +44,7 @@ class TodoList extends React.Component {
 
     this._inputElement.value = "";
     console.log(itemArray);
-    e.preventDefault();
+    e.preventDefault();// tat su kien của form
   }
 
   updateStatusItem(key){
@@ -87,12 +88,12 @@ class TodoList extends React.Component {
     });
   }
 
-  editItem(key) {
+  editItem(key, newtext) {
     var newItems = this.state.items;
 
     for(var i=0; i< newItems.length; i++){
       if(newItems[i].key===key){
-        newItems[i].text="hhhhhhhhhhhhhhhhhhhhhhhhhhh";
+        newItems[i].text=newtext;
       }
     }
 
@@ -105,13 +106,12 @@ class TodoList extends React.Component {
     return (
       <div className="todoListMain">
         <div className="header">
-
           <form onSubmit={this.addItem}>
             <input ref={(a) => this._inputElement = a}  placeholder="enter task" />
             
-            <button class="add" type="submit">add</button>
+            <button class="add" type="submit" >add</button>
 
-            <TodoItems entries={this.state.items} edit={this.editItem}
+            <TodoItems danhsach={this.state.items} edit={this.editItem}
             delete={this.deleteItem} updateStatusItem={this.updateStatusItem} />
 
           </form>
