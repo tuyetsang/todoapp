@@ -37,7 +37,6 @@ class TodoList extends React.Component {
       items: items
     });
     this._inputElement.value = "";
-    console.log(items);
     e.preventDefault();// tat su kien của form
   }
 
