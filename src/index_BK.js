@@ -1,8 +1,11 @@
 //import React from 'react';
-import React from "react";
-import ReactDOM from 'react-dom';
+
 import './TodoList.css';
 import './index.css';
+
+import Modal from 'react-modal';
+import React from "react";
+import ReactDOM from 'react-dom';
 
 /*import TodoList from "./TodoList";
 import TodoItems from "./TodoItems";
@@ -16,7 +19,7 @@ import registerServiceWorker from './registerServiceWorker';*/
 //   document.getElementById('container')
 // );
 
-import Modal from 'react-modal';
+
 
 const customStyles = {
   content : {

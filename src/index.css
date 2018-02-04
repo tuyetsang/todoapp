@@ -1,9 +1,12 @@
 body {
   padding: 50px;
-  background-color: hsla(0, 100%, 50%, 0.3);
+  background-color: #3627c34d !important;
   font-family: sans-serif;
 }
 #container {
   display: flex;
   justify-content: center;
+}
+h1{
+padding-right:100px !important;
 }
