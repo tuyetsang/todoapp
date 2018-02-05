@@ -30,7 +30,7 @@ class TodoList extends React.Component {
         text: this._inputElement.value,
         key: Date.now(),
         done:false,
-        date:new Date().toDateString()
+        date: createDateTime()
       });
     }
     this.setState({
@@ -45,12 +45,12 @@ class TodoList extends React.Component {
     for(var i=0;i<items.length;i++){
       if(items[i].key===key){
         items[i].done = !items[i].done;
+        
         break;
       }
     }
     this.setState({
       items: items,
-      date: new Date().toDateString()
     });
   };
 
@@ -78,11 +78,13 @@ class TodoList extends React.Component {
     });
   }
 
+  //////////////////////// chỉnh trong hàm này nó mới thay đổi
   editItem(key, newtext) {
     var items = this.state.items;
     for(var i=0; i< items.length; i++){
       if(items[i].key===key){
         items[i].text=newtext;
+        items[i].date = createDateTime(); /////////// chổ này
       }
     }
     this.setState({

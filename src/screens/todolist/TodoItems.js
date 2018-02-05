@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import ButtonEdit from './../../utilities/buttonedit';
 import FlipMove from 'react-flip-move';
 import Modal from 'react-modal';
 import React from "react";
@@ -31,6 +32,7 @@ class TodoItems extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.editToParent = this.editToParent.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.edit = this.edit.bind(this);
   }
 
   delete(key) {
@@ -49,8 +51,8 @@ class TodoItems extends React.Component {
     this.setState({todoText: event.target.value});
   }
 
-  edit(key, text) {
-    this.setState({todoKey: key, todoText: text});
+  edit(item) {
+    this.setState({todoKey: item.key, todoText: item.text});
     this.openModal();
 
   };
@@ -80,7 +82,10 @@ class TodoItems extends React.Component {
         <li >
           <div onClick={() => this.updateStatus(item.key)} class={!item.done ? "newItem" : "doneItem"}>{item.text}</div>
 
-          <button class="btn btn-info" onClick={() => this.edit(item.key, item.text)}>Edit</button>
+          {/* <button class="btn btn-info" onClick={() => this.edit(item.key, item.text)}>Edit</button> */}
+
+          {/* tinh nang button edit */}
+          <ButtonEdit value={'Edit'} click={this.edit} data={item}/>
           <button class="btn btn-danger" onClick={() => this.delete(item.key)}>Delete</button>
           <div  onClick={() => this.updateStatus(item.key)} class={!item.done ? "viewdate" : "hidedate"}>{item.date}</div>
         </li>
