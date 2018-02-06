@@ -1,38 +1,25 @@
-import $ from 'jquery'
-import ButtonEdit from './../../utilities/buttonedit';
+
+import React from "react";
 import FlipMove from 'react-flip-move';
 import Modal from 'react-modal';
-import React from "react";
-import ReactDOM from 'react-dom';
-
-const customStyles = {
-  content : {
-    top                   : '30%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)',
-    width : '500px'
-  }
-};
+import {customStyles} from "./../../constants/const";
+import ButtonEdit from "./../../components/button/buttonEdit";
+import ButtonDelete from "./../../components/button/buttonDelete";
 
 class TodoItems extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-
+  constructor(props) {
+    super(props);
     this.state = {
       modalIsOpen : false,
       todoKey: "",
-      todoText: ""
+      todoText: "",
     };
-
     this.delete = this.delete.bind(this);
     this.updateStatus = this.updateStatus.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.editToParent = this.editToParent.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.edit = this.edit.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.editCurent = this.editCurent.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   delete(key) {
@@ -47,51 +34,52 @@ class TodoItems extends React.Component {
     this.props.show(key);
   };
 
+  // change value in input
   handleChange(event) {
     this.setState({todoText: event.target.value});
-  }
-
-  edit(item) {
-    this.setState({todoKey: item.key, todoText: item.text});
-    this.openModal();
-
   };
 
-  editToParent(){
+  // open modal
+  edit(key, text) {
+    this.setState({todoKey: key, todoText: text});
+    this.openModal();
+  };
+
+  //edit from old value to new value
+  editCurent(){
     var key = this.state.todoKey;
     var newtext = this.state.todoText;
+
     if(newtext != null){
       this.props.edit(key, newtext);
     }
 
     this.closeModal();
-  }
+  };
 
+  //status modal
   closeModal(){
     this.setState({modalIsOpen : false});
-  }
+  };
 
   openModal(){
     this.setState({modalIsOpen : true});
   }
-  
+
   render() {
     var todoEntries = this.props.list;
-    var listItems = todoEntries.map((item) => // như foreach nó sẽ đi qua từng item và tạo ra html cho mình.
-      <div class={!item.done ? "listRow" : "listRowDone"}>
-        <li >
-          <div onClick={() => this.updateStatus(item.key)} class={!item.done ? "newItem" : "doneItem"}>{item.text}</div>
-
-          {/* <button class="btn btn-info" onClick={() => this.edit(item.key, item.text)}>Edit</button> */}
-
-          {/* tinh nang button edit */}
-          <ButtonEdit value={'Edit'} click={this.edit} data={item}/>
-          <button class="btn btn-danger" onClick={() => this.delete(item.key)}>Delete</button>
-          <div  onClick={() => this.updateStatus(item.key)} class={!item.done ? "viewdate" : "hidedate"}>{item.date}</div>
+    //foreach pass element and create html
+    var listItems = todoEntries.map((item) =>
+      <div class={!item.done ? "listRow" : "listRowDone"} onClick={() => this.updateStatus(item.key)}>
+        <li>
+          <div class={!item.done ? "newItem" : "doneItem"}>{item.text}</div>
+          <ButtonEdit click={this.edit} data={item}/>
+          <ButtonDelete click={this.delete} data={item.key}/>
+          <div class={!item.done ? "viewdate" : "hidedate"}>{item.date}</div>
         </li>
       </div>
-      );
-    // hiệu ứng hiện nhanh chậm giống faceInt faceOut (FlipMove)
+    );
+    // similar faceInt faceOut (FlipMove)
     return (
       <div>
         <ul className="theList">
@@ -99,20 +87,20 @@ class TodoItems extends React.Component {
             {listItems}
           </FlipMove>
         </ul>
-
+        //create modal edit task
         <Modal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           style={customStyles}
-          contentLabel="Example Modal">
+          contentLabel="Modal">
           <form>
-            <h2>Cập nhật todo</h2>
+            <label class="control-label">Please enter task:</label>
+            <hr/>
+            <input class="form-control " type="text" value={this.state.todoText} onChange={this.handleChange} />
             <br/>
-            <input type="text" value={this.state.todoText} onChange={this.handleChange} />
-            <button onClick={this.editToParent}>sua</button>
+            <center><button class="btn btn-primary"  onClick={this.editCurent}>Save</button></center>
           </form>
         </Modal>
-
       </div>
     );
   }

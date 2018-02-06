@@ -29,7 +29,7 @@
 }
 
 .listRow{
-  background-color: #877eda;
+  background-color: #a3bcd2;
   padding: 20px;
   margin-top: 20px;
   padding-left:15px;
@@ -42,8 +42,7 @@
   cursor: pointer;
 } */
 .listRowDone{
-  color: #333;
-  background-color:#ccaff3c2;
+  background-color:#b4acbfc2;
   padding: 20px;
   margin-top: 20px;
   padding-left:15px;
@@ -62,17 +61,17 @@
     font-weight: bold;
     padding-left: 15px;
     /* background: #de7ab1; */
-    background-color:#877eda;
+    background-color:#a3bcd2;
 }
 
 .doneItem {
     width: 80%;
     display: inline-block;
-    border: 2px solid #ccaff3c2;
-    color: #885656;
+    border:0px solid #b4acbfc2;
+    color: #422828;
     font-size: 16px;
     padding-left: 15px;
-    background: #ccaff3c2;
+    background:#c0b8ccc2;
     text-decoration: line-through;
 }
 .viewdate{
@@ -83,11 +82,6 @@
 .hidedate{
   font-size: 12px;
   font-weight: italic;
-  color: #885656;
+  color: #422828;
   display: inline-block;
-}
-
-
-.show {
-  display: block !important;
 }

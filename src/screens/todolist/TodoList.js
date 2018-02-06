@@ -1,19 +1,13 @@
-import "./TodoList.css";
-
-import {createDateTime, createTime} from "./../../utilities/util";
-
 import React from "react";
 import TodoItems from "./TodoItems";
+import "./TodoList.css";
+import {createDateTime} from "./../../utilities/util";
+
 
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
-    // const todo=(state,action) => {
-    //   return {
-    //   text:action.text,
-    //   key:action.key,
-    //   complete:false
-    // };
+
     this.state = {
       items: []
     };
@@ -23,21 +17,26 @@ class TodoList extends React.Component {
     this.updateStatusItem = this.updateStatusItem.bind(this);
   }
 
+  // create new item
   addItem(e) {
     let items = this.state.items;
-    if (this._inputElement.value !== "") {  // tao moi 1 phan tu
-      items.unshift({ // thêm vào đầu mảng
+    if (this._inputElement.value !== "") {
+        // add new item into first array
+        items.unshift({
         text: this._inputElement.value,
         key: Date.now(),
         done:false,
-        date: createDateTime()
+        date:createDateTime()
       });
     }
     this.setState({
       items: items
     });
     this._inputElement.value = "";
-    e.preventDefault();// tat su kien của form
+    console.log(items);
+
+    // turn off default event of form
+    e.preventDefault();
   }
 
   updateStatusItem(key){
@@ -45,46 +44,38 @@ class TodoList extends React.Component {
     for(var i=0;i<items.length;i++){
       if(items[i].key===key){
         items[i].done = !items[i].done;
-        
         break;
       }
     }
     this.setState({
-      items: items,
+      items: items
     });
   };
 
   deleteItem(key) {
-    //cách 1
-    // let filteredItems = this.state.items.filter((item) => {
-    //   return (item.key !== key);
-    // });
-    // this.setState({
-    //   items: filteredItems
-    // });
-    //cách 2
     var items = this.state.items;
-
     var index = 0;
+
     for(var i=0; i<items.length; i++){
       if(items[i].key==key){
         index = i;
         break;
       }
     }
-    items.splice(index, 1); // xóa tại vị trí xóa 1 item
+
+    // delete item at index
+    items.splice(index, 1);
     this.setState({
       items: items
     });
   }
 
-  //////////////////////// chỉnh trong hàm này nó mới thay đổi
   editItem(key, newtext) {
     var items = this.state.items;
     for(var i=0; i< items.length; i++){
       if(items[i].key===key){
         items[i].text=newtext;
-        items[i].date = createDateTime(); /////////// chổ này
+        items[i].date=createDateTime();
       }
     }
     this.setState({
@@ -95,7 +86,6 @@ class TodoList extends React.Component {
   render() {
     return (
       <div className="todoListMain">
-
         <div className="header">
           <form onSubmit={this.addItem}>
             <input ref={(a) => this._inputElement = a}  placeholder="enter task" />
