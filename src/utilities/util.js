@@ -6,7 +6,7 @@
 
 
 // dùng cách thường
-export function createDateTime(t){
+export function createDateTime(){
     var t = new Date();
     var month = t.getMonth()+1;
     var formatted = t.getFullYear()+"/"+t.getMonth()+"/"+t.getDate()+" "+t.getHours()+":"+t.getMinutes()+":"+t.getSeconds();

@@ -5,11 +5,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TodoList from "./screens/todolist/TodoList";
 import registerServiceWorker from './registerServiceWorker';
+import { Provider } from 'react-redux'
+import todoApp from './reducers'
+import { createStore } from 'redux'
 
-// ReactDOM.render(<App />, document.getElementById('root'));
+let store = createStore(todoApp)
 
-registerServiceWorker();
+// registerServiceWorker();
 ReactDOM.render(
-  <TodoList />,
+  <Provider store={store}>  
+    <TodoList />
+  </Provider>,
   document.getElementById('container')
 );

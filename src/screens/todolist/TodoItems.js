@@ -1,9 +1,9 @@
-import $ from 'jquery'
 import ButtonEdit from './../../utilities/buttonedit';
 import FlipMove from 'react-flip-move';
 import Modal from 'react-modal';
 import React from "react";
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 
 const customStyles = {
   content : {
@@ -74,12 +74,13 @@ class TodoItems extends React.Component {
   openModal(){
     this.setState({modalIsOpen : true});
   }
-  
+
   render() {
-    var todoEntries = this.props.list;
+    var todoEntries = this.props.items;
+    console.log('reader');
     var listItems = todoEntries.map((item) => // như foreach nó sẽ đi qua từng item và tạo ra html cho mình.
       <div class={!item.done ? "listRow" : "listRowDone"}>
-        <li >
+        <li key={item.key}>
           <div onClick={() => this.updateStatus(item.key)} class={!item.done ? "newItem" : "doneItem"}>{item.text}</div>
 
           {/* <button class="btn btn-info" onClick={() => this.edit(item.key, item.text)}>Edit</button> */}
@@ -94,6 +95,8 @@ class TodoItems extends React.Component {
     // hiệu ứng hiện nhanh chậm giống faceInt faceOut (FlipMove)
     return (
       <div>
+                {this.props.items.length}
+
         <ul className="theList">
           <FlipMove duration={100} easing="ease-out">
             {listItems}
@@ -118,4 +121,12 @@ class TodoItems extends React.Component {
   }
 };
 
-export default TodoItems;
+// function get(state){
+//   return {items : state.todos.items};
+// }
+
+function get(state){
+  return {items : state.todos.items, cnt: state.todos.cnt };
+}
+
+export default connect(get)(TodoItems);
